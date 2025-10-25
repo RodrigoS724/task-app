@@ -1,4 +1,4 @@
-:root [viewTheme="dark"] {
+body {
     /*dark mode*/
   /* hsl (fallback color) */
   --bg-dark: hsl(259 91% 3%);
@@ -15,9 +15,10 @@
   --warning: hsl(51 32% 52%);
   --success: hsl(149 31% 55%);
   --info: hsl(217 52% 67%);
+  transition: background-color 0.3s, color 0.3s;
 }
 
-:root [viewTheme="light"] {
+body.light-theme {
     /*light mode*/
   --bg-dark: hsl(260 98% 94%);
   --bg: hsl(260 100% 99%);
