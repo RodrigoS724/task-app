@@ -1,58 +1,56 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-
   import TaskDashboard from "$lib/Layouts/taskDashboard.svelte";
   import HomeDashboard from "$lib/Layouts/homeDashboard.svelte";
   import InventoryDashboard from "$lib/Layouts/inventoryDashboard.svelte";
   import ScheduleDashboard from "$lib/Layouts/scheduleDashboard.svelte";
   import Navbar from "$lib/components/navbar/navbar.svelte";
   import Header from "$lib/components/header/header.svelte";
+
+  import { onMount, tick } from "svelte";
+  import { browser } from "$app/environment"; // Importa para saber si estás en el navegador
+
   let page = "home";
-  let isDarkMode = true;
+
+  let isDarkMode = browser
+    ? localStorage.getItem("themePreference") === "dark"
+    : false;
 
   function handleNavigation(event: CustomEvent) {
-    // El valor de la página viene en event.detail.page
     page = event.detail.page;
-    console.log("Navegando a:", page); // Opcional: para ver en consola
   }
 
   function toggleTheme() {
     isDarkMode = !isDarkMode;
   }
 
-  onMount(() => {
-    const savedTheme = localStorage.getItem("themePreference");
-
-    if (savedTheme !== null) {
-      isDarkMode = savedTheme === "dark";
-    } else {
-      // Opcional: Si no hay preferencia guardada, podrías intentar leer la preferencia del sistema operativo
-      isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-  });
-
+  // 2. BLOQUE REACTIVO: Se ejecuta inmediatamente y cada vez que isDarkMode cambia.
+  // Esto garantiza que la clase se aplique y se guarde la preferencia de inmediato.
   $: {
-    if (typeof window !== "undefined") {
-     localStorage.setItem("themePreference", isDarkMode ? "dark" : "light");
-
-      document.body.classList.toggle("light-theme", isDarkMode);
+    if (browser) {
+      const theme = isDarkMode ? "dark" : "light";
+      document.body.classList.toggle("light-theme", !isDarkMode);
+      // Guardar la preferencia
+      localStorage.setItem("themePreference", theme);
     }
   }
+
 </script>
 
 <main>
   <Header />
-  <div class="main-dash">
-    {#if page === "home"}
-      <HomeDashboard />
-    {:else if page === "tasks"}
-      <TaskDashboard />
-    {:else if page === "schedule"}
-      <ScheduleDashboard />
-    {:else if page === "inventory"}
-      <InventoryDashboard />
-    {/if}
-  </div>
+  <section class="container">
+
+  {#if page === "home"}
+    <HomeDashboard />
+  {:else if page === "tasks"}
+    <TaskDashboard />
+  {:else if page === "schedule"}
+    <ScheduleDashboard />
+  {:else if page === "inventory"}
+    <InventoryDashboard />
+  {/if}
+  </section>
+
   <Navbar
     currentPage={page}
     {isDarkMode}
@@ -60,15 +58,15 @@
     on:toggle={toggleTheme}
   />
 </main>
-
 <style>
   main {
     display: flex;
     flex-direction: column;
     height: 100vh;
   }
-
-  .main-dash {
+  section.container {
+    display: flex;
+    flex-direction: column;
     flex: 1;
   }
 </style>
