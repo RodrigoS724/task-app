@@ -11,7 +11,7 @@
 </script>
 
 <main>
-    <section>
+    <section class="navbar">
         <nav>
             <button
                 class="theme-button"
@@ -32,7 +32,7 @@
             >
         </nav>
     </section>
-
+    <section class="task-dashboard">   
     {#if taskPage === "lastTask"}
         <LastTask />
     {:else if taskPage === "listTask"}
@@ -40,10 +40,11 @@
     {:else if taskPage === "newTask"}
         <NewTask />
     {/if}
+    </section>
 </main>
 
 <style>
-    section {
+    section.navbar{
         list-style-type: none;
         margin: 0;
         padding: 0;
@@ -55,6 +56,13 @@
     section nav {
         display: flex;
         margin: 10px 5px;
+    }
+
+    .task-dashboard{
+        margin: 5px 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
     }
 
     .theme-button {

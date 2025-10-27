@@ -58,7 +58,7 @@
 </ul>
 
 <style>
-ul {
+  ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -67,46 +67,40 @@ ul {
     display: flex;
     width: 100%;
   }
-
   .main-links-container {
     width: 80%;
-   display: flex;
+    display: flex;
     flex-grow: 1;
-    align-items: center;
   }
-
+  
   .main-links-container li {
       float: none; 
       flex-grow: 1; 
       display: flex; 
   }
 
-.dark-mode-toggle {
+  .dark-mode-toggle {
     width: 20%;
     float: none; 
-    
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 0; 
   }
 
-.theme-button {
+  .theme-button {
     background-color: transparent;
     color: var(--text);
     border: 1px solid var(--border-muted);
-    padding: 15px 15px;
+    padding: 10px 15px; 
     cursor: pointer;
     border-radius: 4px;
-    
-    margin: 0 5px; 
-    width: 100%;
+    margin: 5px 5px; /* Margen de 5px a izquierda y derecha */
+    width: 100%; /* El botón ocupa el 100% de su contenedor <li> o <div> */
   }
   li button:hover {
     background-color: var(--bg-light);
   }
-
-  /* ✅ 2. Estilo para la página activa */
   .active {
     background-color: var(--bg-light); /* Un color distinto para resaltarlo */
     color: var(--text-muted) !important;
